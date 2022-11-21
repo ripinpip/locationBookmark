@@ -38,6 +38,11 @@ object DataSingleton {
         return bookmarkCategoryToReturn
     }
 
+    fun createBookmarkCategory(name: String) {
+        val newBookmarkCategory = BookmarkCategory(name)
+        bookmarkCategoryList.add(newBookmarkCategory)
+    }
+
     fun checkAndRequestPermissions(context: Context): Boolean {
         val internet = ContextCompat.checkSelfPermission(
             context,

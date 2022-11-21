@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
@@ -66,10 +68,19 @@ class FragmentMaps : Fragment() {
                 appNavigator.getMapAsync()
                 true
             }
-            R.id.bookmarkLocation -> {
+            R.id.addIcon -> {
                 val bookmarkCategoryAlertDialogView = inflater.inflate(R.layout.dialog_bookmark_location, null, false)
 
                 val nameOfLocationEditText = bookmarkCategoryAlertDialogView.findViewById<EditText>(R.id.nameOfLocationEditText)
+                val bookmarkCategorySpinner = bookmarkCategoryAlertDialogView.findViewById<Spinner>(R.id.bookmarkCategorySpinner)
+
+                val bookmarkCategorySpinnerOptions = mutableListOf<String>()
+                DataSingleton.bookmarkCategoryList.forEach { bookmarkCategory ->
+                    bookmarkCategorySpinnerOptions.add(bookmarkCategory.name)
+                }
+
+                val bookmarkCategorySpinnerArrayAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item, bookmarkCategorySpinnerOptions)
+                bookmarkCategorySpinner.adapter = bookmarkCategorySpinnerArrayAdapter
 
                 val bookmarkLocationAlertDialog = AlertDialog.Builder(requireContext())
                     .setTitle("Bookmark Location")
@@ -78,8 +89,13 @@ class FragmentMaps : Fragment() {
                         dialog.cancel()
                     }
                     .setPositiveButton("Save") { _, _ ->
-                        val newLocation = Location(nameOfLocationEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
-                        DataSingleton.allLocationsBookmarkCategory.locationList.add(newLocation)
+                        val selectedBookmarkCategory = DataSingleton.lookupBookmarkCategoryByName(bookmarkCategorySpinner.selectedItem.toString())
+
+                        selectedBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+
+                        if (selectedBookmarkCategory != DataSingleton.allLocationsBookmarkCategory) {
+                            DataSingleton.allLocationsBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+                        }
                     }
                 bookmarkLocationAlertDialog.show()
 

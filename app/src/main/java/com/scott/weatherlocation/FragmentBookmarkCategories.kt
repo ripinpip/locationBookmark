@@ -1,12 +1,12 @@
 package com.scott.weatherlocation
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -49,6 +49,45 @@ class FragmentBookmarkCategories : Fragment() {
         }
 
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.fragment_bookmark_categories_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val inflater = requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        return when (item.itemId) {
+            R.id.addIcon -> {
+                val addBookmarkCategoryAlertDialogView = inflater.inflate(R.layout.dialog_create_bookmark_category, null, false)
+
+                val nameOfCategoryEditText = addBookmarkCategoryAlertDialogView.findViewById<EditText>(R.id.nameOfCategoryEditText)
+
+                val addBookmarkCategoryAlertDialog = AlertDialog.Builder(requireContext())
+                    .setTitle("Bookmark Location")
+                    .setView(addBookmarkCategoryAlertDialogView)
+                    .setNeutralButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .setPositiveButton("Save") { _, _ ->
+                        DataSingleton.createBookmarkCategory(nameOfCategoryEditText.text.toString())
+                        appNavigator.navigateToFragment(FragmentBookmarkCategories(), false)
+                    }
+                addBookmarkCategoryAlertDialog.show()
+
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }

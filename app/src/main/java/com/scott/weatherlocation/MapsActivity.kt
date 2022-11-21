@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.scott.weatherlocation.databinding.ActivityMapsBinding
 
-
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, AppNavigator, NavigationView.OnNavigationItemSelectedListener{
 
     private lateinit var mMap: GoogleMap

@@ -16,6 +16,11 @@ class BookmarkCategory constructor(val name: String) {
         return locationToReturn
     }
 
+    fun createLocation(name: String, latitude: Double, longitude: Double) {
+        val newLocation = Location(name, latitude, longitude)
+        locationList.add(newLocation)
+    }
+
     fun updateLocationByName(name: String, updatedName: String) : Boolean {
 
         locationList.forEach { location ->
