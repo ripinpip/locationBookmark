@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/getMyLocation"
+        android:title="Get My Location"/>
+    <item
+        android:id="@+id/bookmarkLocation"
+        android:title="Bookmark Location"/>
+
+</menu>
