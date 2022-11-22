@@ -43,6 +43,30 @@ object DataSingleton {
         bookmarkCategoryList.add(newBookmarkCategory)
     }
 
+    fun editBookmarkCategoryByName(name: String, updatedName: String) : Boolean {
+
+        bookmarkCategoryList.forEach { bookmarkCategory ->
+            if (bookmarkCategory.name == name) {
+                bookmarkCategory.name = updatedName
+                return true
+            }
+        }
+
+        return false
+    }
+
+    fun deleteBookmarkCategoryByName(name: String) : Boolean {
+
+        bookmarkCategoryList.forEach { bookmarkCategory ->
+            if (bookmarkCategory.name == name) {
+                bookmarkCategoryList.remove(bookmarkCategory)
+                return true
+            }
+        }
+
+        return false
+    }
+
     fun checkAndRequestPermissions(context: Context): Boolean {
         val internet = ContextCompat.checkSelfPermission(
             context,

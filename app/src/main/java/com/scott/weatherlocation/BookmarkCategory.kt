@@ -1,6 +1,6 @@
 package com.scott.weatherlocation
 
-class BookmarkCategory constructor(val name: String) {
+class BookmarkCategory constructor(var name: String) {
 
     val locationList = mutableListOf<Location>()
 

@@ -2,15 +2,10 @@ package com.scott.weatherlocation
 
 import android.content.Context
 import android.os.Bundle
+import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class FragmentLocationBookmarks : Fragment() {
@@ -80,6 +75,64 @@ class FragmentLocationBookmarks : Fragment() {
         }
 
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.fragment_location_bookmarks_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val inflater = requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        return when (item.itemId) {
+            R.id.editCategory -> {
+                val editBookmarkCategoryAlertDialogView = inflater.inflate(R.layout.dialog_edit_bookmark_category, null, false)
+
+                val nameOfCategoryEditText = editBookmarkCategoryAlertDialogView.findViewById<EditText>(R.id.nameOfCategoryEditText)
+
+                nameOfCategoryEditText.setText(DataSingleton.currentSelectedBookmarkCategory.name)
+
+                val editBookmarkCategoryAlertDialog = AlertDialog.Builder(requireContext())
+                    .setTitle("Edit Category")
+                    .setView(editBookmarkCategoryAlertDialogView)
+                    .setNeutralButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .setPositiveButton("Save") { _, _ ->
+                        DataSingleton.editBookmarkCategoryByName(DataSingleton.currentSelectedBookmarkCategory.name, nameOfCategoryEditText.text.toString())
+                        appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
+                    }
+
+                editBookmarkCategoryAlertDialog.show()
+
+                true
+            }
+            R.id.deleteCategory -> {
+                val deleteBookmarkCategoryAlertDialog = AlertDialog.Builder(requireContext())
+                    .setTitle("Delete Category")
+                    .setMessage("Are you sure you want to delete this category?")
+                    .setNeutralButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .setPositiveButton("Delete") { _, _ ->
+                        DataSingleton.deleteBookmarkCategoryByName(DataSingleton.currentSelectedBookmarkCategory.name)
+                        appNavigator.navigateToFragment(FragmentBookmarkCategories(), false)
+                    }
+
+                deleteBookmarkCategoryAlertDialog.show()
+
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }
