@@ -33,4 +33,38 @@ class BookmarkCategory constructor(var name: String) {
         return false
     }
 
+    fun deleteLocationByName(name: String) : Boolean {
+
+        if (DataSingleton.currentSelectedBookmarkCategory == DataSingleton.allLocationsBookmarkCategory) {
+
+            val location = DataSingleton.allLocationsBookmarkCategory.lookupLocationByName(name)
+
+            DataSingleton.allLocationsBookmarkCategory.locationList.remove(location)
+
+            DataSingleton.bookmarkCategoryList.forEach { bookmarkCategory ->
+                bookmarkCategory.locationList.forEach { location ->
+                    if (location.name == name) {
+                        bookmarkCategory.locationList.remove(location)
+                        return true
+                    }
+                }
+            }
+
+            return true
+        }
+
+        else if (DataSingleton.currentSelectedBookmarkCategory != DataSingleton.allLocationsBookmarkCategory) {
+
+            var location = lookupLocationByName(name)
+            locationList.remove(location)
+
+            location = DataSingleton.allLocationsBookmarkCategory.lookupLocationByName(name)
+            DataSingleton.allLocationsBookmarkCategory.locationList.remove(location)
+
+            return true
+        }
+
+        return false
+    }
+
 }

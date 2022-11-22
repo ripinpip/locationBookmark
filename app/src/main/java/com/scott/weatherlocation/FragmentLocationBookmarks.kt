@@ -55,11 +55,21 @@ class FragmentLocationBookmarks : Fragment() {
             latitudeTextView.text = selectedLocation.latitude.toString()
             longitudeTextView.text = selectedLocation.longitude.toString()
 
+            val locationBookmarkDeleteAlertDialog = AlertDialog.Builder(requireContext())
+                .setTitle("Are you sure you want to delete this location?")
+                .setNeutralButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+                .setPositiveButton("Delete") { _, _ ->
+                    currentBookmarkCategory.deleteLocationByName(selectedLocation.name)
+                    appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
+                }
+
             val locationBookmarkAlertDialog = AlertDialog.Builder(requireContext())
                 .setTitle(selectedLocation.name)
                 .setView(locationBookmarkAlertDialogView)
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.cancel()
+                .setNegativeButton("Delete") { _, _ ->
+                    locationBookmarkDeleteAlertDialog.show()
                 }
                 .setNeutralButton("View on Map") { _, _ ->
                     DataSingleton.goToLocationBoolean = true
@@ -84,7 +94,9 @@ class FragmentLocationBookmarks : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
-        inflater.inflate(R.menu.fragment_location_bookmarks_menu, menu)
+        if (DataSingleton.currentSelectedBookmarkCategory != DataSingleton.allLocationsBookmarkCategory) {
+            inflater.inflate(R.menu.fragment_location_bookmarks_menu, menu)
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
