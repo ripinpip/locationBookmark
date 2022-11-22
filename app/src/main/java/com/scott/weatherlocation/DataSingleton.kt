@@ -6,11 +6,12 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.Manifest
+import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
 
 object DataSingleton {
 
-    val bookmarkCategoryList = mutableListOf<BookmarkCategory>()
+    var bookmarkCategoryList = mutableListOf<BookmarkCategory>()
 
     lateinit var allLocationsBookmarkCategory: BookmarkCategory
 
@@ -21,6 +22,8 @@ object DataSingleton {
     lateinit var currentSelectedBookmarkCategory: BookmarkCategory
 
     lateinit var currentSelectedLocation: Location
+
+    lateinit var sharedPreferences: SharedPreferences
 
     var getMyLocationBoolean = true
 
@@ -41,6 +44,8 @@ object DataSingleton {
     fun createBookmarkCategory(name: String) {
         val newBookmarkCategory = BookmarkCategory(name)
         bookmarkCategoryList.add(newBookmarkCategory)
+
+        Save.saveBookmarkCategoryListToSharedPreferences()
     }
 
     fun editBookmarkCategoryByName(name: String, updatedName: String) : Boolean {
@@ -48,6 +53,7 @@ object DataSingleton {
         bookmarkCategoryList.forEach { bookmarkCategory ->
             if (bookmarkCategory.name == name) {
                 bookmarkCategory.name = updatedName
+                Save.saveBookmarkCategoryListToSharedPreferences()
                 return true
             }
         }
@@ -60,6 +66,7 @@ object DataSingleton {
         bookmarkCategoryList.forEach { bookmarkCategory ->
             if (bookmarkCategory.name == name) {
                 bookmarkCategoryList.remove(bookmarkCategory)
+                Save.saveBookmarkCategoryListToSharedPreferences()
                 return true
             }
         }

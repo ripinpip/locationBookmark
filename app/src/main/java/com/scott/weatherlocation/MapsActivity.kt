@@ -1,6 +1,7 @@
 package com.scott.weatherlocation
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -32,6 +33,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, AppNavigator, Navi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        DataSingleton.sharedPreferences = getSharedPreferences("master", Context.MODE_PRIVATE)
+
+        DataSingleton.bookmarkCategoryList = Save.getBookmarkCategoryListFromSharedPreferences()
+
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_maps)
 
@@ -56,6 +61,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, AppNavigator, Navi
         DataSingleton.bookmarkCategoryList.forEach { bookmarkCategory ->
             if (bookmarkCategory.name == "All Locations") {
                 allLocationsCategoryExists = true
+                DataSingleton.allLocationsBookmarkCategory = bookmarkCategory
             }
         }
 
