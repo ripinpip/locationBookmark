@@ -27,6 +27,7 @@ class FragmentLocationBookmarks : Fragment() {
         (activity as AppCompatActivity?)?.supportActionBar?.title = DataSingleton.currentSelectedBookmarkCategory.name
 
         val locationListView = view.findViewById<ListView>(R.id.locationListView)
+        val noLocationsToShowTextView = view.findViewById<TextView>(R.id.noLocationsToShowTextView)
 
         val currentBookmarkCategory = DataSingleton.currentSelectedBookmarkCategory
 
@@ -38,6 +39,15 @@ class FragmentLocationBookmarks : Fragment() {
 
         val arrayAdapter: ArrayAdapter<*> = ArrayAdapter(requireContext(), R.layout.list_view_item, locationList)
         locationListView.adapter = arrayAdapter
+
+        if (locationList.isEmpty()) {
+            locationListView.visibility = ListView.GONE
+            noLocationsToShowTextView.visibility = TextView.VISIBLE
+        }
+        else {
+            locationListView.visibility = ListView.VISIBLE
+            noLocationsToShowTextView.visibility = TextView.GONE
+        }
 
         locationListView.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position) as String
