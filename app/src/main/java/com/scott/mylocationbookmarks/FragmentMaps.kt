@@ -1,4 +1,4 @@
-package com.scott.weatherlocation
+package com.scott.mylocationbookmarks
 
 import android.app.AlertDialog
 import android.content.Context

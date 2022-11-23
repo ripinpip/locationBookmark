@@ -1,9 +1,8 @@
-package com.scott.weatherlocation
+package com.scott.mylocationbookmarks
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
-import com.scott.weatherlocation.databinding.ActivityMapsBinding
+import com.scott.mylocationbookmarks.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, AppNavigator, NavigationView.OnNavigationItemSelectedListener{
 

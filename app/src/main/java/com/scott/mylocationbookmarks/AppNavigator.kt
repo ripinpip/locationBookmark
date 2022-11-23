@@ -1,4 +1,4 @@
-package com.scott.weatherlocation
+package com.scott.mylocationbookmarks
 
 import androidx.fragment.app.Fragment
 

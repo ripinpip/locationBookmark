@@ -1,4 +1,4 @@
-package com.scott.weatherlocation
+package com.scott.mylocationbookmarks
 
 class BookmarkCategory constructor(var name: String) {
 

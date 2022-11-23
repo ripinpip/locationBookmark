@@ -1,4 +1,4 @@
-package com.scott.weatherlocation
+package com.scott.mylocationbookmarks
 
 import android.content.SharedPreferences
 import com.google.gson.Gson

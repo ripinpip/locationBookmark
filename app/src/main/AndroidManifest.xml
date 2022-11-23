@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WeatherLocation"
+        android:theme="@style/Theme.MyLocationBookmarks"
         tools:targetApi="31">
 
         <meta-data
