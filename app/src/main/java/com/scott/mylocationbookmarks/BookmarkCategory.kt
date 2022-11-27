@@ -19,6 +19,8 @@ class BookmarkCategory constructor(var name: String) {
     fun createLocation(name: String, latitude: Double, longitude: Double) {
         val newLocation = Location(name, latitude, longitude)
         locationList.add(newLocation)
+
+        Save.saveBookmarkCategoryListToSharedPreferences()
     }
 
     fun updateLocationByName(name: String, updatedName: String) : Boolean {
@@ -26,6 +28,8 @@ class BookmarkCategory constructor(var name: String) {
         locationList.forEach { location ->
             if (location.name == name) {
                 location.name = updatedName
+                Save.saveBookmarkCategoryListToSharedPreferences()
+
                 return true
             }
         }
@@ -45,6 +49,9 @@ class BookmarkCategory constructor(var name: String) {
                 bookmarkCategory.locationList.forEach { location ->
                     if (location.name == name) {
                         bookmarkCategory.locationList.remove(location)
+
+                        Save.saveBookmarkCategoryListToSharedPreferences()
+
                         return true
                     }
                 }
@@ -60,6 +67,8 @@ class BookmarkCategory constructor(var name: String) {
 
             location = DataSingleton.allLocationsBookmarkCategory.lookupLocationByName(name)
             DataSingleton.allLocationsBookmarkCategory.locationList.remove(location)
+
+            Save.saveBookmarkCategoryListToSharedPreferences()
 
             return true
         }
