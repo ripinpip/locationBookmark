@@ -5,7 +5,7 @@ class BookmarkCategory constructor(var name: String) {
     val locationList = mutableListOf<Location>()
 
     fun lookupLocationByName(name: String) : Location {
-        var locationToReturn = Location("", 0.0, 0.0)
+        var locationToReturn = Location("", "", 0.0, 0.0)
 
         locationList.forEach { location ->
             if (location.name == name) {
@@ -16,18 +16,19 @@ class BookmarkCategory constructor(var name: String) {
         return locationToReturn
     }
 
-    fun createLocation(name: String, latitude: Double, longitude: Double) {
-        val newLocation = Location(name, latitude, longitude)
+    fun createLocation(name: String, notes: String, latitude: Double, longitude: Double) {
+        val newLocation = Location(name, notes, latitude, longitude)
         locationList.add(newLocation)
 
         Save.saveBookmarkCategoryListToSharedPreferences()
     }
 
-    fun updateLocationByName(name: String, updatedName: String) : Boolean {
+    fun updateLocationByName(name: String, updatedName: String, updatedNotes: String) : Boolean {
 
         locationList.forEach { location ->
             if (location.name == name) {
                 location.name = updatedName
+                location.notes = updatedNotes
                 Save.saveBookmarkCategoryListToSharedPreferences()
 
                 return true

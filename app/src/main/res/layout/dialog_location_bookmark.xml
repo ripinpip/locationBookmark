@@ -11,6 +11,12 @@
         android:layout_height="wrap_content"
         android:hint="Name of Location" />
 
+    <EditText
+        android:id="@+id/locationNotesEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location Notes" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

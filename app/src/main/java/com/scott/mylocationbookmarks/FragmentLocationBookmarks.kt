@@ -58,10 +58,12 @@ class FragmentLocationBookmarks : Fragment() {
             val locationBookmarkAlertDialogView = inflater.inflate(R.layout.dialog_location_bookmark, null, false)
 
             val nameOfLocationEditText = locationBookmarkAlertDialogView.findViewById<EditText>(R.id.nameOfLocationEditText)
+            val locationNotesEditText = locationBookmarkAlertDialogView.findViewById<EditText>(R.id.locationNotesEditText)
             val latitudeTextView = locationBookmarkAlertDialogView.findViewById<TextView>(R.id.latitudeTextView)
             val longitudeTextView = locationBookmarkAlertDialogView.findViewById<TextView>(R.id.longitudeTextView)
 
             nameOfLocationEditText.setText(selectedLocation.name)
+            locationNotesEditText.setText(selectedLocation.notes)
             latitudeTextView.text = selectedLocation.latitude.toString()
             longitudeTextView.text = selectedLocation.longitude.toString()
 
@@ -87,7 +89,7 @@ class FragmentLocationBookmarks : Fragment() {
                     appNavigator.navigateToFragment(FragmentMaps(), false)
                 }
                 .setPositiveButton("Save") { _, _ ->
-                    currentBookmarkCategory.updateLocationByName(selectedLocation.name, nameOfLocationEditText.text.toString())
+                    currentBookmarkCategory.updateLocationByName(selectedLocation.name, nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString())
                     appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
                 }
             locationBookmarkAlertDialog.show()

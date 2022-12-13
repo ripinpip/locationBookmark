@@ -81,6 +81,7 @@ class FragmentMaps : Fragment() {
                 val bookmarkCategoryAlertDialogView = inflater.inflate(R.layout.dialog_bookmark_location, null, false)
 
                 val nameOfLocationEditText = bookmarkCategoryAlertDialogView.findViewById<EditText>(R.id.nameOfLocationEditText)
+                val locationNotesEditText = bookmarkCategoryAlertDialogView.findViewById<EditText>(R.id.locationNotesEditText)
                 val bookmarkCategorySpinner = bookmarkCategoryAlertDialogView.findViewById<Spinner>(R.id.bookmarkCategorySpinner)
 
                 val bookmarkCategorySpinnerOptions = mutableListOf<String>()
@@ -100,10 +101,10 @@ class FragmentMaps : Fragment() {
                     .setPositiveButton("Save") { _, _ ->
                         val selectedBookmarkCategory = DataSingleton.lookupBookmarkCategoryByName(bookmarkCategorySpinner.selectedItem.toString())
 
-                        selectedBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+                        selectedBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
 
                         if (selectedBookmarkCategory != DataSingleton.allLocationsBookmarkCategory) {
-                            DataSingleton.allLocationsBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+                            DataSingleton.allLocationsBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
                         }
                     }
                 bookmarkLocationAlertDialog.show()
