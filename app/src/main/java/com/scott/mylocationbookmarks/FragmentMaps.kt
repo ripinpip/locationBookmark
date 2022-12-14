@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
@@ -101,11 +102,21 @@ class FragmentMaps : Fragment() {
                     .setPositiveButton("Save") { _, _ ->
                         val selectedBookmarkCategory = DataSingleton.lookupBookmarkCategoryByName(bookmarkCategorySpinner.selectedItem.toString())
 
-                        selectedBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+                        if (DataSingleton.allLocationsBookmarkCategory.lookupLocationByName(nameOfLocationEditText.text.toString()).name == "" &&
+                            nameOfLocationEditText.text.isNotEmpty()) {
 
-                        if (selectedBookmarkCategory != DataSingleton.allLocationsBookmarkCategory) {
-                            DataSingleton.allLocationsBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+                            selectedBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+
+                            if (selectedBookmarkCategory != DataSingleton.allLocationsBookmarkCategory) {
+                                DataSingleton.allLocationsBookmarkCategory.createLocation(nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString(), DataSingleton.lastLocation.first, DataSingleton.lastLocation.second)
+                            }
+
+                            Toast.makeText(requireContext(), "Location saved!", Toast.LENGTH_SHORT).show()
                         }
+                        else {
+                            Toast.makeText(requireContext(), "Location with name " + nameOfLocationEditText.text.toString() + " already exists", Toast.LENGTH_SHORT).show()
+                        }
+
                     }
                 bookmarkLocationAlertDialog.show()
 

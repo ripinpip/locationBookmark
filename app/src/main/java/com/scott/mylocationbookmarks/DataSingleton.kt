@@ -29,7 +29,7 @@ object DataSingleton {
 
     var goToLocationBoolean = false
 
-    fun lookupBookmarkCategoryByName(name: String) : BookmarkCategory{
+    fun lookupBookmarkCategoryByName(name: String) : BookmarkCategory {
         var bookmarkCategoryToReturn = BookmarkCategory("")
 
         bookmarkCategoryList.forEach { bookmarkCategory ->

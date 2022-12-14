@@ -89,8 +89,17 @@ class FragmentLocationBookmarks : Fragment() {
                     appNavigator.navigateToFragment(FragmentMaps(), false)
                 }
                 .setPositiveButton("Save") { _, _ ->
-                    currentBookmarkCategory.updateLocationByName(selectedLocation.name, nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString())
-                    appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
+                    if (DataSingleton.allLocationsBookmarkCategory.lookupLocationByName(nameOfLocationEditText.text.toString()).name == "" &&
+                        nameOfLocationEditText.text.isNotEmpty()) {
+
+                        currentBookmarkCategory.updateLocationByName(selectedLocation.name, nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString())
+                        appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
+
+                        Toast.makeText(requireContext(), "Location saved!", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(requireContext(), "Location with name \"" + nameOfLocationEditText.text.toString() + "\" already exists", Toast.LENGTH_SHORT).show()
+                    }
                 }
             locationBookmarkAlertDialog.show()
 
@@ -129,8 +138,18 @@ class FragmentLocationBookmarks : Fragment() {
                         dialog.cancel()
                     }
                     .setPositiveButton("Save") { _, _ ->
-                        DataSingleton.editBookmarkCategoryByName(DataSingleton.currentSelectedBookmarkCategory.name, nameOfCategoryEditText.text.toString())
-                        appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
+                        if (DataSingleton.lookupBookmarkCategoryByName(nameOfCategoryEditText.text.toString()).name == "" &&
+                            nameOfCategoryEditText.text.isNotEmpty()) {
+
+                            DataSingleton.editBookmarkCategoryByName(DataSingleton.currentSelectedBookmarkCategory.name, nameOfCategoryEditText.text.toString())
+                            appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
+
+                            Toast.makeText(requireContext(), "Category saved!", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
+                            Toast.makeText(requireContext(), "Category " + nameOfCategoryEditText.text.toString() + " already exists!", Toast.LENGTH_SHORT).show()
+                        }
+
                     }
 
                 editBookmarkCategoryAlertDialog.show()

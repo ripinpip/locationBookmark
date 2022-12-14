@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class FragmentBookmarkCategories : Fragment() {
@@ -77,8 +78,17 @@ class FragmentBookmarkCategories : Fragment() {
                         dialog.cancel()
                     }
                     .setPositiveButton("Save") { _, _ ->
-                        DataSingleton.createBookmarkCategory(nameOfCategoryEditText.text.toString())
-                        appNavigator.navigateToFragment(FragmentBookmarkCategories(), false)
+                        if (DataSingleton.lookupBookmarkCategoryByName(nameOfCategoryEditText.text.toString()).name == "" &&
+                            nameOfCategoryEditText.text.isNotEmpty()) {
+
+                            DataSingleton.createBookmarkCategory(nameOfCategoryEditText.text.toString())
+                            appNavigator.navigateToFragment(FragmentBookmarkCategories(), false)
+
+                            Toast.makeText(requireContext(), "Category saved!", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
+                            Toast.makeText(requireContext(), "Category " + nameOfCategoryEditText.text.toString() + " already exists!", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 addBookmarkCategoryAlertDialog.show()
 
