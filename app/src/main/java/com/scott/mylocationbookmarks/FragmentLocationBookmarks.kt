@@ -89,7 +89,8 @@ class FragmentLocationBookmarks : Fragment() {
                     appNavigator.navigateToFragment(FragmentMaps(), false)
                 }
                 .setPositiveButton("Save") { _, _ ->
-                    if (nameOfLocationEditText.text.isNotEmpty()) {
+                    if (nameOfLocationEditText.text.isNotEmpty() &&
+                        DataSingleton.allLocationsBookmarkCategory.lookupLocationByName(nameOfLocationEditText.text.toString()).name == "") {
 
                         currentBookmarkCategory.updateLocationByName(selectedLocation.name, nameOfLocationEditText.text.toString(), locationNotesEditText.text.toString())
                         appNavigator.navigateToFragment(FragmentLocationBookmarks(), false)
